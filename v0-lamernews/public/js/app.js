@@ -1,7 +1,7 @@
 function login() {
     var data = {
-        username: $("input[name=username]").val(),
-        password: $("input[name=password]").val(),
+        username: $("input[name=username]", '#login').val(),
+        password: $("input[name=password]", '#login').val(),
     };
     var register = false;
     $.ajax({
@@ -24,9 +24,9 @@ function login() {
 
 function register() {
     var data = {
-        username: $("input[name=username]").val(),
+        username: $("input[name=username]", '#register').val(),
         email: $("input[name=email]").val(),
-        password: $("input[name=password]").val(),
+        password: $("input[name=password]", '#register').val(),
     };
     var register = true;
     $.ajax({

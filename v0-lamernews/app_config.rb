@@ -4,7 +4,7 @@ SiteUrl = "http://commit.ws"
 SiteDescription = "Tech News for Activist Coders"
 
 # Redis config
-RedisURL = "redis://127.0.0.1:10000"
+RedisURL = "redis://127.0.0.1:6379"
 
 # Security
 PBKDF2Iterations = 1000 # Set this to 5000 to improve security. But it is slow.
