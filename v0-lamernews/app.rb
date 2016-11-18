@@ -217,22 +217,35 @@ end
 get '/login' do
     H.set_title "Login - #{SiteName}"
     H.page {
-        H.div(:id => "login") {
-            H.form(:name=>"f") {
-                H.label(:for => "username") {"username"}+
-                H.inputtext(:id => "username", :name => "username")+
-                H.label(:for => "password") {"password"}+
-                H.inputpass(:id => "password", :name => "password")+H.br+
-                H.checkbox(:name => "register", :value => "1")+
-                "create account"+H.br+
-                H.submit(:name => "do_login", :value => "Login")
+        H.div(:id => "register") {
+            H.form(:name=>"r") {
+                H.h3{"Sign Up"}+
+                H.label(:for => "rusername") {"username"}+
+                H.inputtext(:id => "rusername", :name => "username", :pattern => "^[a-zA-Z][a-zA-Z0-9_\-]+$", :required => "true")+
+                H.label(:for => "email") {"email"}+
+                H.inputtext(:id => "email", :name => "email", :type => "email", :required => "true")+
+                H.label(:for => "rpassword") {"password"}+
+                H.inputpass(:id => "rpassword", :name => "password", :pattern => "^.{8,}$", :required => "true")+H.br+
+                H.submit(:name => "do_login", :value => "Sign up")
             }
         }+
+        H.div(:id => "login") {
+            H.form(:name=>"f") {
+                H.h3{"Login"}+
+                H.label(:for => "username") {"username"}+
+                H.inputtext(:id => "username", :name => "username", :pattern => "^[a-zA-Z][a-zA-Z0-9_\-]+$", :required => "true")+
+                H.label(:for => "password") {"password"}+
+                H.inputpass(:id => "password", :name => "password", :pattern => "^.{8,}$", :required => "true")+H.br+
+                H.submit(:name => "do_login", :value => "Login")
+            }+
+            H.a(:href=>"/reset-password") {"reset password"}
+        }+
         H.div(:id => "errormsg"){}+
-        H.a(:href=>"/reset-password") {"reset password"}+
+
         H.script() {'
             $(function() {
                 $("form[name=f]").submit(login);
+                $("form[name=r]").submit(register);
             });
         '}
     }
@@ -754,7 +767,7 @@ post '/api/create_account' do
             :error => "Password is too short. Min length: #{PasswordMinLength}"
         }.to_json
     end
-    auth,apisecret,errmsg = create_user(params[:username],params[:password])
+    auth,apisecret,errmsg = create_user(params[:username],params[:email],params[:password])
     if auth 
         return {:status => "ok", :auth => auth, :apisecret => apisecret}.to_json
     else
@@ -1199,7 +1212,7 @@ end
 #               auth token if the registration succeeded, otherwise
 #               is nil. The second is the error message if the function
 #               failed (detected testing the first return value).
-def create_user(username,password)
+def create_user(username,email,password)
     if $r.exists("username.to.id:#{username.downcase}")
         return nil, nil, "Username is already taken, please try a different one."
     end
@@ -1218,7 +1231,7 @@ def create_user(username,password)
         "ctime",Time.now.to_i,
         "karma",UserInitialKarma,
         "about","",
-        "email","",
+        "email",email,
         "auth",auth_token,
         "apisecret",apisecret,
         "flags","",
