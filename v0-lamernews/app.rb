@@ -1,3 +1,4 @@
+# Test
 # Copyright 2011 Salvatore Sanfilippo. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -1452,9 +1453,7 @@ def vote_news(news_id,user_id,vote_type)
 
     # Check if the user has enough karma to perform this operation
     if $user['id'] != news['user_id']
-        if (vote_type == :up and
-             (get_user_karma(user_id) < NewsUpvoteMinKarma)) or
-           (vote_type == :down and
+        if (vote_type == :down and
              (get_user_karma(user_id) < NewsDownvoteMinKarma))
             return false,"You don't have enough karma to vote #{vote_type}"
         end
@@ -1483,10 +1482,7 @@ def vote_news(news_id,user_id,vote_type)
     # news owner in the case of an upvote.
     if $user['id'] != news['user_id']
         if vote_type == :up
-            increment_user_karma_by(user_id,-NewsUpvoteKarmaCost)
             increment_user_karma_by(news['user_id'],NewsUpvoteKarmaTransfered)
-        else
-            increment_user_karma_by(user_id,-NewsDownvoteKarmaCost)
         end
     end
 
