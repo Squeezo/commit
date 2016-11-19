@@ -85,13 +85,14 @@ nav a {
 #register,#login,#submitform {
     display:block;
     position:relative;
-    width:150px;
     float: left;
-
     border: solid 1px #CCCCCC;
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
+}
+#register,#login {
+    width:150px;
 }
 
 
