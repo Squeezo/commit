@@ -319,47 +319,52 @@ get '/set-new-password' do
         }
     end
 end
-
 get '/submit' do
     redirect "/login" if !$user
     H.set_title "Submit a new story - #{SiteName}"
     H.page {
-        H.h2 {"Submit a new story"}+
-        H.div(:id => "submitform") {
-            H.form(:name=>"f") {
-                H.inputhidden(:name => "news_id", :value => -1)+
-                H.label(:for => "title") {"title"}+
-                H.inputtext(:id => "title", :name => "title", :size => 80, :value => (params[:t] ? H.entities(params[:t]) : ""))+H.br+
-                H.label(:for => "url") {"url"}+H.br+
-                H.inputtext(:id => "url", :name => "url", :size => 60, :value => (params[:u] ? H.entities(params[:u]) : ""))+H.br+
-                "or if you don't have an url type some text"+
-                H.br+
-                H.label(:for => "text") {"text"}+
-                H.textarea(:id => "text", :name => "text", :cols => 60, :rows => 10) {}+
-                H.button(:name => "do_submit", :value => "Submit")
-            }
-        }+
-        H.div(:id => "errormsg"){}+
-        H.p { "Popular types of submissions include:"}+
-        H.ul {
-            H.li {"Ask Commit - Ask the community a question"}+
-            H.li {"Show Commit - Show off your latest project"}+
-            H.li {"VO - Volunteer Opportunity"}+
-            H.li {"and of course, posting intersting links"}
-        }+
-        H.p {
-            bl = "javascript:window.location=%22#{SiteUrl}/submit?u=%22+encodeURIComponent(document.location)+%22&t=%22+encodeURIComponent(document.title)"
-            "Submitting news is simpler using the "+
-            H.a(:href => bl) {
-                "bookmarklet"
+        H.div(:id => "columnsContainer") {
+            H.div(:id => "leftColumn") {
+                H.h2 {"Submit a new story"}+
+
+                H.div(:id => "submitform") {
+                    H.form(:name=>"f") {
+                        H.inputhidden(:name => "news_id", :value => -1)+
+                        H.label(:for => "title") {"title"}+
+                        H.inputtext(:id => "title", :name => "title", :size => 80, :value => (params[:t] ? H.entities(params[:t]) : ""))+
+                        H.label(:for => "url") {"url"}+
+                        H.inputtext(:id => "url", :name => "url", :size => 60, :value => (params[:u] ? H.entities(params[:u]) : ""))+
+                        H.label(:for => "text") {"text  <span class='sub'>(if you don't have a url type some text here)</span>"}+
+                        H.textarea(:id => "text", :name => "text", :cols => 60, :rows => 10) {}+
+                        H.button(:name => "do_submit", :value => "Submit")
+                    }
+                } +
+                H.div(:id => "errormsg"){}
             }+
-            " (drag the link to your browser toolbar)"
-        }+
-        H.script() {'
-            $(function() {
-                $("input[name=do_submit]").click(submit);
-            });
-        '}
+            H.div(:id => "rightColumn") {
+
+                H.h2 { "Popular types of submissions include:"}+
+                H.ul {
+                    H.li {"<em>Ask Commit</em> - Ask the community a question"}+
+                    H.li {"<em>Show Commit</em> - Show off your latest project"}+
+                    H.li {"<em>VO</em> - Volunteer Opportunity"}+
+                    H.li {"and of course, posting interesting links"}
+                }+
+                H.p {
+                    bl = "javascript:window.location=%22#{SiteUrl}/submit?u=%22+encodeURIComponent(document.location)+%22&t=%22+encodeURIComponent(document.title)"
+                    "Submitting news is simpler using the "+
+                    H.a(:href => bl) {
+                        "bookmarklet"
+                    }+
+                    " (drag the link to your browser toolbar)"
+                }+
+                H.script() {'
+                    $(function() {
+                        $("input[name=do_submit]").click(submit);
+                    });
+                '}
+            }
+        }
     }
 end
 

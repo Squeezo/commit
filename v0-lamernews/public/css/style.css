@@ -82,7 +82,7 @@ nav a {
     margin-right:10px;
 }
 
-#register,#login,#submitform {
+#register,#login {
     display:block;
     position:relative;
     float: left;
@@ -96,7 +96,7 @@ nav a {
 }
 
 
-#register label, #login label, #submitform label {
+#register label, #login label {
     font-size:12px;
     font-weight:bold;
 }
@@ -430,4 +430,51 @@ topcomment {
         display:block;
     }
 
+}
+
+
+/* Submit Page specific styles */
+#columnsContainer { position: relative; margin: .5em; }
+
+#leftColumn, #rightColumn {  padding: 1.25em; padding-top:0;}
+#leftColumn { margin-bottom: .5em; }
+
+#columnsContainer #submitform {
+    display:block;
+    position:relative;
+}
+
+#columnsContainer input[type=text], #columnsContainer textarea {
+    width:450px;
+    margin:.5em 0 1em;
+    display:block;
+}
+
+#columnsContainer em, #columnsContainer h3 {
+    font-weight: bold;
+}
+
+#columnsContainer ul {
+    margin-bottom:10px;
+}
+
+#columnsContainer li {
+    line-height:1.5em;
+}
+
+#columnsContainer label {
+    font-size: 1em;
+    font-weight: bold;
+    display:block;
+}
+
+#columnsContainer span.sub{
+    display:inline-block;
+    font-size:.8em;
+    font-weight: normal;
+}
+
+@media screen and (min-width: 980px ) {
+    #leftColumn { margin-right: 35.5em; }
+    #rightColumn { position: absolute; top: 0; right: 0; width: 25em; }   
 }
